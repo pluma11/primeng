@@ -6,4 +6,5 @@ export interface Categoria{
     superCategoria:string;
     descripcion:string;
 	
+	
 }
