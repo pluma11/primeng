@@ -5,6 +5,6 @@ export interface Categoria{
     id:string;
     superCategoria:string;
     descripcion:string;
-	
+	numero:number;
 	
 }
