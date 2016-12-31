@@ -1,0 +1,59 @@
+<p-dataTable [value]="datasource" [lazy]="true" [rows]="sizeRow" [paginator]="true"
+             [totalRecords]="totalRecords" (onLazyLoad)="loadClientesLazy($event)"
+             selectionMode="single" (onRowSelect)="onRowSelect($event)">
+    <header>Lista de Clientes</header>
+    <p-column field="id" header="Id" [sortable]="true" [filter]="true"></p-column>
+    <p-column field="nombre" header="Nombre" [sortable]="true" [filter]="true"></p-column>
+    <p-column field="numeroDocumento" header="Docuemento"></p-column>
+    <p-column field="sexo" header="sexo">
+        <template let-cli="rowData">
+            <span>{{ cli.sexo | tipoSexoP }}</span>
+        </template>
+    </p-column>
+    <p-column field="fechaNacimiento" header="Nacimiento">
+        <template let-cli="rowData">
+            <span>{{ cli.fechaNacimiento }}</span>
+        </template>
+    </p-column>
+    <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button></div></footer>
+</p-dataTable>
+
+
+<p-dialog header="Cliente Details" [(visible)]="displayDialog" [resizable]="false" showEffect="fade" [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" *ngIf="cliente">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="nombre">Nombre y Apellido</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="nombre" [(ngModel)]="cliente.nombre" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="documento">Documento</label></div>
+            <div class="ui-grid-col-8"><input type="number" pInputText id="documento" [(ngModel)]="cliente.numeroDocumento" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="sexo">Sexo</label></div>
+            <p-dropdown id="sexo" [options]="sexos" [(ngModel)]="cliente.sexo">
+            </p-dropdown>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="tipoDoc">Tipo Documento</label></div>
+            <p-dropdown id="tipoDoc" [options]="tiposDoc" [(ngModel)]="cliente.tipoDocumento">
+            </p-dropdown>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="regIva">Regimen Iva</label></div>
+            <p-dropdown id="regIva" [options]="regimenesIva" [(ngModel)]="cliente.regimenIva">
+            </p-dropdown>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label  for="fechNac">Nacimiento</label></div>
+            <p-calendar id="fechNac" [(ngModel)]="cliente.fechaNacimiento" showAnim="slideDown" [showIcon]="true" ></p-calendar>
+        </div>
+
+    </div>
+    <footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
+            <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+        </div>
+    </footer>
+</p-dialog>
